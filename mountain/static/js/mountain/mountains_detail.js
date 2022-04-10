@@ -114,33 +114,45 @@ const drawHikingMap = (showIndex, isForward) => {
 // 등산로 좌, 우 화살표 누르면 ..
 const clickedArrow = (e) => {
     const currentHikingCourseIndex = parseInt(document.querySelector('#hiking-area').dataset.index);
-    const totalHikingCourseLength = hikingCourseList.length;
     const hikingCourseIndex = document.querySelector('#hiking-course-index');
     let nextHikingCourseIndex = 0;
     let isForward = false;
     
     if (e.target.id === 'f-arrow') {
-        if (currentHikingCourseIndex === totalHikingCourseLength-1) {
-            alert('마지막 등산코스 입니다');
-            return;
-        } else {
-            nextHikingCourseIndex = currentHikingCourseIndex+1;
-            hikingCourseIndex.textContent = nextHikingCourseIndex+1;
-            isForward = true;
-        }
+        nextHikingCourseIndex = currentHikingCourseIndex+1;
+        hikingCourseIndex.textContent = nextHikingCourseIndex+1;
+        isForward = true;
     } else if (e.target.id === 'b-arrow') {
-        if (currentHikingCourseIndex === 0) {
-            alert('첫 등산코스 입니다');
-            return;
-        } else {
-            nextHikingCourseIndex = currentHikingCourseIndex-1;
-            hikingCourseIndex.textContent = currentHikingCourseIndex;
-        }
+        nextHikingCourseIndex = currentHikingCourseIndex-1;
+        hikingCourseIndex.textContent = currentHikingCourseIndex;
     } else {
         return;
     }
     drawHikingMap(nextHikingCourseIndex, isForward);
     document.querySelector('#hiking-area').dataset.index = nextHikingCourseIndex.toString();
+
+    // 다음 인덱스에 따라 prev, next 버튼 유무 처리
+    setHikingPrevAndNextBtn(nextHikingCourseIndex);
+}
+
+const setHikingPrevAndNextBtn = (hikingCourseIndex) => {
+    const START_INDEX = 0;
+    const END_INDEX = hikingCourseList.length-1;
+
+    const prevBtnWrapper = document.querySelector('#b-arrow').parentElement
+    const nextBtnWrapper = document.querySelector('#f-arrow').parentElement
+    const currHikingIndex = document.querySelector('#hiking-course-index');
+
+    if (hikingCourseIndex === START_INDEX) {
+        currHikingIndex.textContent = currHikingIndex.textContent + " (처음)"
+        prevBtnWrapper.style.visibility = 'hidden';
+    } else if (hikingCourseIndex === END_INDEX) {
+        currHikingIndex.textContent = currHikingIndex.textContent + " (마지막)"
+        nextBtnWrapper.style.visibility = 'hidden';
+    } else {
+        prevBtnWrapper.style.visibility = 'visible';
+        nextBtnWrapper.style.visibility = 'visible';
+    }
 }
 
 const setHikingMap = () => {
@@ -173,6 +185,7 @@ const setHikingMap = () => {
         isHikingResponseOk = true;
         hikingCourseList = geojson.response.result.featureCollection.features;
         drawHikingMap(hikingCourseIndex);
+        setHikingPrevAndNextBtn(hikingCourseIndex);
     }
 }
 
