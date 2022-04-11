@@ -361,7 +361,7 @@ const getPostBox = (post, extra_info) => {
             </div>
         </div>
         <div class="image-box">
-            <img src="${extra_info[4]}" alt="사진"/>
+            <img src="${extra_info[3]}" alt="사진"/>
         </div>
         <div class="content-box">
             <div class="title">
