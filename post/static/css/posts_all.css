@@ -109,3 +109,8 @@
     color: rgb(177, 179, 184);
     font-size: 0.8rem;
 }
+
+.writer-info > a{
+    text-decoration: none;
+    color:black;
+}

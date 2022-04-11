@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+import os
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(os.environ.get('ADMIN_URL'), admin.site.urls),
     path('', include('mountain.urls')),  # 산 추천 페이지가 메인 페이지이므로 최상단에 위치
     path('', include('help.urls')),
     path('', include('user.urls')),

@@ -143,9 +143,10 @@ def logout(request):
 
 # 마이 페이지
 @login_required(login_url='login')
-def my_page(request):
+def my_page(request, uid):
     # 현재 유저 id
-    user_id = request.user.id
+    # user_id = request.user.id
+    user_id = uid
 
     # 현재 유저 id에 맞는 유저 모델 호출
     current_user = MooyahoUser.objects.get(id=user_id)
@@ -170,6 +171,7 @@ def my_page(request):
 
     # 프로필 수정
     if request.method == 'POST':
+        current_user = MooyahoUser.objects.get(id=request.user.id)
         try:
             current_user.profile_img = request.FILES.get('profile_img')
             current_user.save()

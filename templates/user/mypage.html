@@ -26,23 +26,29 @@
                 </div>
             </div>
             {% csrf_token %}
+        {% if myinfo.id == user.id %}
             <input id="user-photo-changer" type="file" accept="image/*" name="profile_img" hidden />
+        {% else %}
+            <input id="user-photo-changer" type="hidden"/>
+        {% endif %}
         </div>
         <div id="user-info-wrapper">
-            <span>{{ user.nickname }}</span>
+            <span>{{ myinfo.nickname }}</span>
             <br/>
-            <span class="badge rounded-pill {{ user.gender|get_color_by_gender }}">{{ user.gender }}</span>
-            <span class="badge rounded-pill bg-success">{{ user.age_gr }}</span>
-            <span class="badge rounded-pill bg-warning">{{ user.exp }}</span>
+            <span class="badge rounded-pill {{ myinfo.gender|get_color_by_gender }}">{{ myinfo.gender }}</span>
+            <span class="badge rounded-pill bg-success">{{ myinfo.age_gr }}</span>
+            <span class="badge rounded-pill bg-warning">{{ myinfo.exp }}</span>
             <br/>
-            {% for reason in user.reason|get_my_reason_list %}
+            {% for reason in myinfo.reason|get_my_reason_list %}
             <span class="badge rounded-pill bg-dark">{{ reason }}</span>
             {% endfor %}
+        {% if myinfo.id == user.id %}
             <div id="delete-account-link-area">
                 <a href="{% url 'delete-account' %}">
                     회원탈퇴
                 </a>
             </div>
+        {% endif %}
         </div>
     </div>
     <div id="post-area">
