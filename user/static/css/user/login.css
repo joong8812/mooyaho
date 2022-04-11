@@ -16,7 +16,7 @@
 /* 로고 */
 #logo-wrapper {
     text-align: center;
-    margin-top: 8rem;
+    margin-top: 4rem;
     margin-bottom: 4rem;
 }
 
@@ -33,14 +33,14 @@
     border-radius: 15px;
 }
 
-/* 아이디, 패스워드 입력 */
-#input-wrapper > div:nth-child(2) {
-    margin-bottom: 2rem;
+/* 이메일 기억하기 영역 */
+.form-check {
+    margin-top: 1rem;
 }
 
 /* 에러 메시지 */
 #error-msg-area {
-    margin-top: -1rem;
+    margin-top: 1rem;
     margin-bottom: 1rem;
 }
 #error-msg-area > span {
@@ -58,22 +58,32 @@
 }
 
 #button-area > button:first-child {
-    margin-right: 1rem;
     background-color: #ffc159;
     color: white;
-}
-
-#button-area > button:last-child {
-    background-color: #bad072;
-    border-color: #bad072;
 }
 
 /* 둘러보기 영역 */
 #guest-link-area {
     width: 100%;
     margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
-#guest-link-area > a {
-    font-style: oblique;
+#signup-area{
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+#signup-area > a{
+    color: lightslategrey;
+    font-size: 15px;
+}
+
+#hiking-icon{
+    font-size: 20px;
+    margin-top: 5px
 }
