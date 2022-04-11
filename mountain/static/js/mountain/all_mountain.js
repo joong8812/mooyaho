@@ -13,13 +13,7 @@ const afterMeetObserver = (entries, observer) => {
     })
 }
 
-// 실행부
-document.querySelectorAll('.image-wrapper').forEach(mountainImg => {
-    mountainImg.addEventListener('click', goMountainPage);
-})
-
-let observer;
-document.addEventListener("DOMContentLoaded", function () {
+const imageObserveSetting = () => {
     const intersectionObserverOptions = {
         root: null,
         rootMargin: '500px',
@@ -30,4 +24,34 @@ document.addEventListener("DOMContentLoaded", function () {
     imgs.forEach(img => {
         observer.observe(img);
     })
+}
+
+const showTheResionMountains = (e) => {
+    const region = e.target.nextElementSibling.textContent;
+    document.querySelectorAll('.image-wrapper').forEach(mtImage => {
+        if (region === '전체 산') {
+            mtImage.classList.remove('hide');
+            return;
+        }
+
+        if (mtImage.dataset.region != region) {
+            mtImage.classList.add('hide');
+        } else {
+            mtImage.classList.remove('hide');
+        }
+    })
+}
+
+// 실행부
+document.querySelectorAll('.image-wrapper').forEach(mountainImg => {
+    mountainImg.addEventListener('click', goMountainPage);
+})
+
+document.querySelectorAll('input[name="btnradio"]').forEach(regionBtn => {
+    regionBtn.addEventListener('click', showTheResionMountains);
+})
+
+let observer;
+document.addEventListener("DOMContentLoaded", function () {
+    imageObserveSetting();
 });

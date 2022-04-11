@@ -12,42 +12,43 @@
 {% endblock %}
 
 {% block content %}
-    <!-- <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-        <label class="btn btn-outline-primary" for="btnradio1">전체 산</label>
+    <div id="region-btn-group">
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+            <label class="btn btn-outline-primary" for="btnradio1">전체 산</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-        <label class="btn btn-outline-primary" for="btnradio2">강원도</label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio2">강원도</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-        <label class="btn btn-outline-primary" for="btnradio3">경상남도</label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio3">경상남도</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-        <label class="btn btn-outline-primary" for="btnradio4">경상북도</label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio4">경상북도</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-        <label class="btn btn-outline-primary" for="btnradio5">서울/경기</label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio5">서울/경기</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-        <label class="btn btn-outline-primary" for="btnradio6">제주도</label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio6">제주도</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-        <label class="btn btn-outline-primary" for="btnradio7">전라남도</label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio7" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio7">전라남도</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-        <label class="btn btn-outline-primary" for="btnradio8">전라북도</label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio8" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio8">전라북도</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-        <label class="btn btn-outline-primary" for="btnradio9">충청남도</label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio9" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio9">충청남도</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-        <label class="btn btn-outline-primary" for="btnradio10">충청북도</label>
-    </div> -->
-
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio10" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio10">충청북도</label>
+        </div>
+    </div>
     <div id="content-wrapper">
         {% for mountain in mountains %}
             {% with id=mountain.id|intToStr %}
-                <div class="image-wrapper" data-id="{{ id }}">
+                <div class="image-wrapper" data-id="{{ id }}" data-region="{{ mountain.province }}">
                     {% with image_path='images/mountains/mountain_'|add:id|add:'.jpeg' %}
                         <img class="mountain-image" data-src="{% static image_path %}">
                         <p>{{ mountain.mountain_name }}</p>
@@ -56,6 +57,7 @@
             {% endwith %}
         {% endfor %}
     </div>
+    <input type="hidden" id="mt-data" data-mountains="{{mts}}">
 {% endblock %}
 
 {% block js %}
