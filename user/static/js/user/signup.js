@@ -209,8 +209,8 @@ const clickedLogo = (e) => {
 }
 
 document.querySelector('#logo').addEventListener('click', clickedLogo);
-document.querySelector('#button-area > button:nth-child(1)').addEventListener('click', clickedSubmitBtn);
-document.querySelector('#button-area > button:nth-child(2)').addEventListener('click', clickedCancelBtn);
+document.querySelector('#button-area > button:nth-child(1)').addEventListener('click', clickedCancelBtn);
+document.querySelector('#button-area > button:nth-child(2)').addEventListener('click', clickedSubmitBtn);
 document.querySelectorAll('.form-control').forEach(inputEle => {
     inputEle.addEventListener('focusout', focusOutInputElement);
 }) 
