@@ -114,3 +114,16 @@
     text-decoration: none;
     color:black;
 }
+
+/* Loading Spinner */
+.spinner-wrapper {
+    width: 100%;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.spinner-wrapper .spinner-border {
+    width: 3.5rem;
+    height: 3.5rem;
+    color: #9DCDBF;
+}

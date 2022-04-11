@@ -274,3 +274,126 @@ $('#reportBtn').click(function () {
         })
     }
 })
+
+/* infinite scroll 구현 */
+const afterMeetSentinel = (entries, observer) => {
+    entries.forEach(entry => {
+        if (!entry.isIntersecting) return; // entry intersecting 중 아니면 리턴
+        if (scrollChk) return; // 페이지 데이터 불러오는 중에는 observer 기능 안함
+
+        if (!isPageOver) {
+            observer.observe(document.querySelector('#sentinel'));
+            postPage += 1;
+            getNextPage(postPage);
+        } else {
+            document.querySelector('#sentinel').classList.add('hide');
+        }
+    });
+}
+
+// 다음 글 페이지를 요청
+const getNextPage = (reqPage) => {
+    const param = {
+        'req_page': reqPage
+    }
+
+    $.ajax({
+        url: '/posts/',
+        data: param,
+        method: 'GET',
+        dataType: 'json',
+        success: function(result) {
+            const posts = JSON.parse(result.posts);
+            const extra_info = result.extra_info;
+            if (extra_info.length > 0 ) {
+                showPosts(posts, extra_info);
+            } else {
+                isPageOver = true;
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        },
+        beforeSend: function() {
+            scrollChk = true;
+            document.querySelector('.spinner-wrapper').classList.remove('hide');
+        },
+        complete: function() {
+            scrollChk = false;
+            document.querySelector('.spinner-wrapper').classList.add('hide');
+        }
+    })
+}
+
+// ajax로 가져 온 글을 보여준다
+const showPosts = (posts, extra_info) => {
+    postList = document.querySelector('#post-list');
+    posts.forEach((post, index) => {
+        postList.innerHTML += getPostBox(post, extra_info[index]);
+    })
+}
+
+// 각 글의 html을 구성하여 리턴
+const getPostBox = (post, extra_info) => {
+    const id = post.pk;
+    const info = post.fields;
+    
+    let postBoxHtml = `
+    <div class="post-box" onclick="location.href='/posts/${id}/'">
+        <div class="writer-box">
+            <div class="writer-img-wrapper">
+                <img src="${extra_info[0]}" alt="">
+            </div>
+            <div class="writer-info">
+                <a href="/mypage/${extra_info[1]}/"><span>${extra_info[2]}</span></a>
+                <div id="mountain-info">
+                    <span>${info.mountain_name}</span>
+    `
+    if (parseInt(info.mountain_id) < 101) {
+    postBoxHtml += `
+                    <a href="/mountains_detail/${info.mountain_id}/">
+                        <span class="material-icons mountain-icon">image_search</span>
+                    </a>
+                    `
+    }
+    postBoxHtml += `
+                </div>
+            </div>
+        </div>
+        <div class="image-box">
+            <img src="${extra_info[4]}" alt="사진"/>
+        </div>
+        <div class="content-box">
+            <div class="title">
+                <h3>${info.title}</h3>
+            </div>
+            <div class="post-text">
+            `
+    if (info.content.length > 20) {
+        const slicedContent = info.content.slice(0, 20);
+        postBoxHtml += `
+            <p>${slicedContent}...</p>
+        `
+    } else {
+        postBoxHtml += `
+            <p>${info.content}</p>
+        `
+    }
+    postBoxHtml += `
+            </div>
+            <div class="post-time">
+                <span>${extra_info[4]}</span>
+            </div>
+        </div>
+    </div>
+    `
+    return postBoxHtml;
+}
+
+let postPage = 1; // 페이지 초기값
+let scrollChk = false; // 스크롤 체크
+let isPageOver = false; // 페이지 더 있는지 알려주는 변수
+document.addEventListener("DOMContentLoaded", function () {
+    io = new IntersectionObserver(afterMeetSentinel);
+    io.observe(document.querySelector('#sentinel'));
+});

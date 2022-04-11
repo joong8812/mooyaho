@@ -12,6 +12,10 @@ from user.user_models import MooyahoUser
 from comment.comment_models import Comment
 from user.user_models import UserViewLog
 
+from django.core.paginator import Paginator
+from django.core import serializers
+from .my_utils import elapsed_time
+
 
 # 글 전체 페이지 기능
 @ login_required(login_url='login')
@@ -19,10 +23,33 @@ def post_list(request):
     if request.method == 'GET':
         # 삭제처리 되지 않은 모든 글 가져오기, 포스팅 날짜 역순으로 정렬
         all_post = Post.objects.filter(deleted=0).order_by('-created_at')
-        post_list_context = {
-            'all_post': all_post
-        }
-        return render(request, 'post/posts.html', post_list_context)
+        req_page = request.GET.get('req_page')
+        if req_page is None: # 처음 전체 글 페이지 요청
+            req_page = 1
+            paginator = Paginator(all_post, 7)
+            posts = paginator.get_page(req_page)
+            post_list_context = {
+                'all_post': posts 
+            }
+            return render(request, 'post/posts.html', post_list_context)
+        else: # 스크롤 다음 페이지 요청
+            paginator = Paginator(all_post, 7) # 글 7개 단위로 페이지 나눔
+            if int(req_page) <= paginator.num_pages: # 마지막 페이지 이하 요청만 처리
+                posts = paginator.get_page(req_page).object_list
+                extra_info = [] # 자바스크립트에서 따로 값 가져오기 어려운 것들을 따로 빼서 전달
+                for post in posts:
+                    user = post.user
+                    extra_info.append([user.profile_img.url, user.id, user.nickname, 
+                                    post.hiking_img.url, elapsed_time(post.created_at)])
+            else: # 마지막 페이지 이상 요청 시, 빈 값 전달
+                posts = []
+                extra_info = []
+            
+            post_list = {
+                'posts': serializers.serialize('json', posts),
+                'extra_info': extra_info
+            }
+            return JsonResponse(post_list)
 
 
 # 글 상세 페이지 기능
