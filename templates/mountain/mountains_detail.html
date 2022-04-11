@@ -75,21 +75,30 @@
                 <div id="restaurant-info-content"></div>
             </div>
             <hr>
-            <div id="restaurant-info-title">
-                <span class="material-icons">create</span>
-                <span>관련포스팅</span>
-            </div>
-        {% if posting_mountain %}
-            {% for post in posting_mountain %}
-                <div class="post-in-box" onclick="location.href='/posts/{{ post.id }}/'">
-                    <div class="image-box">
-                        <img src="{{ post.hiking_img.url }}" alt="사진"/>
+            <div>
+                <div>
+                    <div class="post-info-area">
+                        <div id="posting-info-title">
+                            <span class="material-icons">create</span>
+                            <span>관련포스팅</span>
+                        </div>
+                    </div>
+                    <div id="posting-area">
+                        {% if posting_mountain %}
+                            {% for post in posting_mountain %}
+                                <div class="post-in-box" onclick="location.href='/posts/{{ post.id }}/'">
+                                    <div class="image-box">
+                                        <img src="{{ post.hiking_img.url }}"
+                                             alt="사진"/>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p><br>관련포스팅이 없습니다<br></p>
+                        {% endif %}
                     </div>
                 </div>
-            {% endfor %}
-        {% else %}
-            <p><br>관련포스팅이 없습니다<br></p>
-        {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
