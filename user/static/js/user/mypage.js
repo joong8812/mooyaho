@@ -26,7 +26,7 @@ const changeMyPhoto = (e) => {
     
     $.ajax({
         type: 'POST',
-        url: '/mypage/',
+        url: window.location.href,
         processData: false,
         contentType: false,
         data: formData,
