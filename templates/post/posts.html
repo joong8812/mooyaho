@@ -21,7 +21,7 @@
                     <img src="{{ content.user.profile_img.url }}" alt="">
                 </div>
                 <div class="writer-info">
-                    <span>{{ content.user.nickname }}</span>
+                    <a href="/mypage/{{ content.user.id }}/"><span>{{ content.user.nickname }}</span></a>
                     <div id="mountain-info">
                         <span>{{ content.mountain_name }}</span>
                         {% if content.mountain_id < 101 %}

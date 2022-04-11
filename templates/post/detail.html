@@ -21,7 +21,7 @@
                     <img src="{{ clicked_post.user.profile_img.url }}" alt="">
                 </div>
                 <div class="writer-info">
-                    <span>{{ clicked_post.user.nickname }}</span>
+                    <a href="/mypage/{{ clicked_post.user.id }}"><span>{{ clicked_post.user.nickname }}</span></a>
                     <div>
                         <span class="material-icons">location_on</span>
                         {% if clicked_post.mountain_id < 101%}
