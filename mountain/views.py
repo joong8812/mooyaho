@@ -10,6 +10,8 @@ import urllib.request
 import json
 import os
 
+from django.core import serializers
+
 # 받아온 산 아이디 +1시켜주는 함수
 def mountain_id_plus(x) :
     cc = []
@@ -102,26 +104,9 @@ def mountains(request):
     # user = request.user.is_authenticated
     # 산 모델 중에서 100번째까지만 나타내게 하는 필터값
     all_mountain = Mountain.objects.filter(id__lt=101)
-    kw_mountain = Mountain.objects.filter(id__lt=101, province='강원도')
-    jb_mountain = Mountain.objects.filter(id__lt=101, province='전라북도')
-    jn_mountain = Mountain.objects.filter(id__lt=101, province='전라남도')
-    cb_mountain = Mountain.objects.filter(id__lt=101, province='충청북도')
-    cn_mountian = Mountain.objects.filter(id__lt=101, province='충청남도')
-    sk_mountain = Mountain.objects.filter(id__lt=101, province='서울/경기')
-    kb_mountain = Mountain.objects.filter(id__lt=101, province='경상북도')
-    kn_mountain = Mountain.objects.filter(id__lt=101, province='경상남도')
-    jj_mountain = Mountain.objects.filter(id__lt=101, province='제주도')
 
     return render(request, 'mountain/all_mountain.html', {'mountains': all_mountain,
-                                                          'kw_mountains': kw_mountain,
-                                                          'jb_mountains': jb_mountain,
-                                                          'jn_mountains': jn_mountain,
-                                                          'cb_mountains': cb_mountain,
-                                                          'cn_mountains': cn_mountian,
-                                                          'sk_mountains': sk_mountain,
-                                                          'kb_mountains': kb_mountain,
-                                                          'kn_mountains': kn_mountain,
-                                                          'jj_mountains': jj_mountain,
+                                                          'mts': serializers.serialize('json', all_mountain)
                                                           })
 
 
