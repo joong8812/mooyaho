@@ -143,6 +143,14 @@ const setHikingPrevAndNextBtn = (hikingCourseIndex) => {
     const nextBtnWrapper = document.querySelector('#f-arrow').parentElement
     const currHikingIndex = document.querySelector('#hiking-course-index');
 
+    // 등산로 데이터가 없으면 prev, next 버튼 없앰
+    if (hikingCourseList.length == 0) {
+        currHikingIndex.textContent = " (데이터 없음)"
+        prevBtnWrapper.style.display = 'none';
+        nextBtnWrapper.style.display = 'none';
+        return;
+    }
+
     if (hikingCourseIndex === START_INDEX) {
         currHikingIndex.textContent = currHikingIndex.textContent + " (처음)"
         prevBtnWrapper.style.visibility = 'hidden';
@@ -183,8 +191,14 @@ const setHikingMap = () => {
 
     function startDataLayer(geojson) {
         isHikingResponseOk = true;
-        hikingCourseList = geojson.response.result.featureCollection.features;
-        drawHikingMap(hikingCourseIndex);
+        try {
+            hikingCourseList = geojson.response.result.featureCollection.features;
+            drawHikingMap(hikingCourseIndex);
+        } catch (e) {
+            if (e instanceof TypeError) { // 등산로 API로 부터 결과값이 없을 때...
+                hikingCourseList = [];
+            }
+        }
         setHikingPrevAndNextBtn(hikingCourseIndex);
     }
 }
