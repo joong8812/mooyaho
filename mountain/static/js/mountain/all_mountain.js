@@ -9,8 +9,14 @@ const afterMeetObserver = (entries, observer) => {
             let imgElement = entry.target;
             imgElement.setAttribute('src', imgElement.dataset.src);
             observer.unobserve(imgElement);
+            hideSpinners(imgElement);
         }
     })
+}
+
+const hideSpinners = (imgElement) => {
+    const spinner = imgElement.nextElementSibling.nextElementSibling;
+    spinner.classList.add('hide');
 }
 
 const imageObserveSetting = () => {

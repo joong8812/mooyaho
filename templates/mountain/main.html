@@ -38,6 +38,9 @@
                                 <img class="mountain-images" data-src="{% static img_path %}" alt="">
                             {% endwith %}
                             <p>{{mountain.mountain_name}}</p>
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
                         </div>  
                 {% if not forloop.counter0|divisibleby:2 or forloop.last %}
                     </div>

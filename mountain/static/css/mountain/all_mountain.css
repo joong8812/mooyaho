@@ -29,6 +29,16 @@
     font-size: 2rem;
 }
 
+/* 이미지 로딩 spinner */
+.image-wrapper .spinner-border {
+    position: absolute;
+    top: 38%;
+    left: 46%;
+    color: #9DCDBF;
+    font-size: 2rem;
+}
+
+
 /* 지역 버튼 */
 #region-btn-group {
     position: sticky;
