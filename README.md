@@ -102,3 +102,10 @@
 <img width="1491" alt="api1" src="https://user-images.githubusercontent.com/18342765/162860739-d892e3fe-3680-4dcd-a246-916a657c9f7d.png">
 <img width="1493" alt="api2" src="https://user-images.githubusercontent.com/18342765/162860800-99c588fc-23cc-453a-b7c1-fce80ad16486.png">
 <img width="1486" alt="admin_api" src="https://user-images.githubusercontent.com/18342765/162860852-9d845cf6-7b9c-4ecc-8de8-febea40868c3.png">
+
+## AI 서버 저장소 🚌
+### [mooyaho-ai](https://github.com/KIMMIJIDLQSLEK/mooyaho-ai)
+
+## 위키 📚
+### [Local DB 구성 가이드](https://github.com/joong8812/mooyaho/wiki/Local-DB-%EA%B5%AC%EC%84%B1-%EA%B0%80%EC%9D%B4%EB%93%9C)
+### [AWS RDS 데이터 Local DB로 dump하기 (옮기기)](https://github.com/joong8812/mooyaho/wiki/AWS-RDS-%EB%8D%B0%EC%9D%B4%ED%84%B0-Local-DB%EB%A1%9C-dump%ED%95%98%EA%B8%B0-(%EC%98%AE%EA%B8%B0%EA%B8%B0))
