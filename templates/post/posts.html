@@ -14,6 +14,7 @@
 
 
 {% block content %}
+<div id="post-list">
     {% for content in all_post %}
         <div class="post-box" onclick="location.href='/posts/{{ content.id }}/'">
             <div class="writer-box">
@@ -21,7 +22,7 @@
                     <img src="{{ content.user.profile_img.url }}" alt="">
                 </div>
                 <div class="writer-info">
-                    <span>{{ content.user.nickname }}</span>
+                    <a href="/mypage/{{ content.user.id }}/"><span>{{ content.user.nickname }}</span></a>
                     <div id="mountain-info">
                         <span>{{ content.mountain_name }}</span>
                         {% if content.mountain_id < 101 %}
@@ -52,7 +53,14 @@
             </div>
         </div>
     {% endfor %}
-    {% csrf_token %}
+</div>
+{% csrf_token %}
+<div class="spinner-wrapper">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+<p id="sentinel"></p>
 {% endblock %}
 
 {% block js %}

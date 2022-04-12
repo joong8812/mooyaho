@@ -97,6 +97,39 @@ const clickedSearchBackButton = (e) => {
     document.querySelector('#mountainSearchBar').value = '';
 }
 
+const displayCurrentPageOnFooter = () => {
+    const currURL = window.location.href;
+    const currPage = currURL.split('/')[3];
+    const pageList = ['', 'mountains', 'posts', 'mypage', '', 'mountains_detail'];
+    const pageIndex = pageList.indexOf(currPage) % 4;
+    if (pageIndex != -1) {
+        const currPageButton = document.querySelector(`#footer > div:nth-child(${pageIndex+1})`);
+        drawBottomLine(currPageButton);
+    }
+}
+
+const initDisplayCurrentPageOnFooter = () => {
+    document.querySelectorAll('#footer > div').forEach(btnWrapper => {
+        btnWrapper.style.borderBottom = '0px';
+    });
+}
+
+const mouseOverNavigateButton = (e) => {
+    const targetBtnWrapper = e.target.parentElement;
+    initDisplayCurrentPageOnFooter();
+    drawBottomLine(targetBtnWrapper);
+}
+
+const drawBottomLine = (targetElement) => {
+    targetElement.style.borderBottom = '4px solid black';
+    targetElement.style.boxSizing = 'border-box';
+}
+
+const mouseLeaveFooter = () => {
+    initDisplayCurrentPageOnFooter();
+    displayCurrentPageOnFooter();
+}
+
 // 실행부
 let mountainNameList;
 const menuButtons = document.querySelectorAll('#menu-btn-group > button');
@@ -107,8 +140,14 @@ for(let i=0; i<menuButtons.length; i++) {
 const footerButtons = document.querySelectorAll('.footer-button-wrapper > i');
 for(let i=0; i<footerButtons.length; i++) {
     footerButtons[i].addEventListener('click', clickedNavigateButton);
+    footerButtons[i].addEventListener('mouseenter', mouseOverNavigateButton);
 }
 
 document.querySelector('#search-icon').addEventListener('click', clickedSearchButton);
 document.querySelector('#search-back-wrapper').addEventListener('click', clickedSearchBackButton);
 window.addEventListener('keydown', enterSearch);
+document.querySelector('#footer').addEventListener('mouseleave', mouseLeaveFooter);
+
+document.addEventListener("DOMContentLoaded", function () {
+    displayCurrentPageOnFooter();
+});

@@ -106,9 +106,19 @@ body {
     z-index: 999;
 }
 
+.footer-button-wrapper:hover {
+    border-bottom: 4px solid black;
+    box-sizing: border-box;
+}
+
 .footer-button-wrapper > i {
     font-size: 34px;
     cursor: pointer;
+}
+
+/* 햄버거 메뉴(사이드메뉴) */
+.side-menu:hover {
+    box-shadow: -0.1px -5px 4px rgb(194, 214, 176) inset;
 }
 
 /* 요소를 숨기는 클래스 */
@@ -152,6 +162,4 @@ body {
     #app {
         margin: 0;
     }
-
-    
 }

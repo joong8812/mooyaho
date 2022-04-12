@@ -51,6 +51,15 @@
     font-size: 20px;
 }
 
+/* 이미지 로딩 spinner */
+.image-wrapper .spinner-border {
+    position: absolute;
+    top: 38%;
+    left: 46%;
+    color: #9DCDBF;
+    font-size: 2rem;
+}
+
 /* 추천 포스트 영역 */
 /* 추천 포스트 전체 타이틀 */
 .recommend-post > h2 {

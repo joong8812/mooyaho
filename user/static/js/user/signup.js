@@ -68,7 +68,7 @@ const showValidationResult = (valid, targetElement, msg, msgOn=true) => {
 const checkEmailValidation = (emailInputElement) => {
     let result = true;
     let msg = '좋아요:)';
-    const emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+    const emailRegExp = /^[A-Za-z0-9]([-_\.]?[A-Za-z0-9])*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
     if (!emailRegExp.test(emailInputElement.value)) {
         msg = '이메일 형식을 확인해주세요';
         showValidationResult(false, emailInputElement, msg);
@@ -209,8 +209,8 @@ const clickedLogo = (e) => {
 }
 
 document.querySelector('#logo').addEventListener('click', clickedLogo);
-document.querySelector('#button-area > button:nth-child(1)').addEventListener('click', clickedSubmitBtn);
-document.querySelector('#button-area > button:nth-child(2)').addEventListener('click', clickedCancelBtn);
+document.querySelector('#button-area > button:nth-child(1)').addEventListener('click', clickedCancelBtn);
+document.querySelector('#button-area > button:nth-child(2)').addEventListener('click', clickedSubmitBtn);
 document.querySelectorAll('.form-control').forEach(inputEle => {
     inputEle.addEventListener('focusout', focusOutInputElement);
 }) 

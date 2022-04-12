@@ -38,7 +38,7 @@
                 </label>
                 <input type="text" class="form-control" placeholder="글 제목" name="title" id="title"/>
                 <input type="text" list="datalist" class="form-control" placeholder="산 이름 입력" name="inputMt"
-                        id="location">
+                         onkeyup="characterCheck(this)" onkeydown="characterCheck(this)" id="location">
                 <datalist id="datalist">
                     {% for mountain in mountains %}
                         <option value="{{ mountain.mountain_name }}">
@@ -74,7 +74,7 @@
                 <input type="text" class="form-control" placeholder="글 제목" name="title" id="title"
                         value="{{ form.initial.title }}">
                 <input type="text" list="datalist" class="form-control" placeholder="산 이름 입력" name="inputMt"
-                        id="location" value="{{ form.initial.mountain_name }}"></textarea>
+                        onkeyup="characterCheck(this)" onkeydown="characterCheck(this)" id="location" value="{{ form.initial.mountain_name }}"></textarea>
                 <datalist id="datalist">
                     {% for mountain in mountains %}
                         <option value="{{ mountain.mountain_name }}">
@@ -103,7 +103,7 @@
         $("#imgInput").change(function () {
             readURL(this);
             document.querySelector('#imgPreview').classList.remove('hide');
-            document.querySelector('#image-area > div').classList.add('hide');
+            {#document.querySelector('#image-area > div').classList.add('hide');#}
         });
 
         const clickedImgUploadBtn = (e) => {
@@ -138,49 +138,22 @@
             return true;
         }
 
-        const postForm = (url, data) => { // TODO: util 성 함수 모아두는 곳이 있으면 좋겠네요 ㅎㅎ
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: data,
-                contentType: false,
-                processData: false,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("X-CSRFToken", document.querySelector('input[name=csrfmiddlewaretoken]').value);
-                },
-                success: function (data) {
-                    window.location.href = data.redirect
-                },
-                error: function () {
-                    alert('오류가 발생했습니다!');
-                }
-            });
-        }
-
-        const makeWebpAndSendForm = (form, rawImage) => {
-            const canvas = document.createElement('canvas');
-            canvas.width = rawImage.naturalWidth;
-            canvas.height = rawImage.naturalHeight;
-            canvas.getContext('2d').drawImage(rawImage, 0, 0);
-            canvas.toBlob(
-                (blob) => {
-                    const formData = new FormData(form);
-                    formData.set('hiking_img', blob, 'posting.webp');
-                    postForm(form.action, formData);
-                },
-                'image/webp',
-            );
-        }
-
         const doSubmit = (e) => {
             e.preventDefault();
             e.stopPropagation();
             const form = document.querySelector('form');
             if (!checkBlankElement(form)) return;
+            form.submit();
+        }
 
-            const rawImage = new Image();
-            rawImage.onload = () => {makeWebpAndSendForm(form, rawImage)};
-            rawImage.src = URL.createObjectURL(form[1].files[0]);
+        // 특수문자 입력 방지
+        function characterCheck(obj){
+        var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+        // 허용할 특수문자는 여기서 삭제하면 됨+띄어쓰기도 추가
+        if( regExp.test(obj.value) ){
+            alert("특수문자는 입력하실수 없습니다.");
+            obj.value = obj.value.substring( 0 , obj.value.length - 1 ); // 특수문자 입력할경우 지워짐
+            }
         }
 
         document.querySelector('#img-upload-button').addEventListener('click', clickedImgUploadBtn);

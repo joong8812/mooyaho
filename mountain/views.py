@@ -10,6 +10,8 @@ import urllib.request
 import json
 import os
 
+from django.core import serializers
+
 # 받아온 산 아이디 +1시켜주는 함수
 def mountain_id_plus(x) :
     cc = []
@@ -102,7 +104,10 @@ def mountains(request):
     # user = request.user.is_authenticated
     # 산 모델 중에서 100번째까지만 나타내게 하는 필터값
     all_mountain = Mountain.objects.filter(id__lt=101)
-    return render(request, 'mountain/all_mountain.html', {'mountains': all_mountain})
+
+    return render(request, 'mountain/all_mountain.html', {'mountains': all_mountain,
+                                                          'mts': serializers.serialize('json', all_mountain)
+                                                          })
 
 
 def mountains_detail(request, id):
@@ -115,6 +120,10 @@ def mountains_detail(request, id):
         b = UserViewLog(mountain_id=mountain_id,
                         user_id=user_id)
         b.save()
+
+    # 해당 산과 관련된 포스팅
+    posting_mountain = Post.objects.filter(mountain_id=my_mountain.id, deleted=0).order_by('-created_at')[0:3]
+
 
     # 맛집 정보 요청
     client_id = os.environ.get('NAVER_CLIENT_ID')
@@ -133,7 +142,9 @@ def mountains_detail(request, id):
         restaurant_info = json.loads(response_body.decode('utf-8'))
     else:
         print("Error Code:" + rescode)
-    return render(request, 'mountain/mountains_detail.html', {'mountain_info': my_mountain, 'restaurant_info': json.dumps(restaurant_info)})
+    return render(request, 'mountain/mountains_detail.html', {'mountain_info': my_mountain,
+                                                              'restaurant_info': json.dumps(restaurant_info),
+                                                              'posting_mountain': posting_mountain})
 
 
 def mountain_list(request):
