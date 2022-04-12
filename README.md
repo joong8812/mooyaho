@@ -90,3 +90,15 @@
 - 산 등산로 정보 : 가고 싶은 산의 여러 코스를 확인해보자
 - 마이페이지 : 나의 정보, 업로드한 사진, 좋아요한 포스팅 확인하기
 - 공지사항, 리뷰 : 사용자들과 개발자의 소통!
+- 마이페이지 : 나의 정보, 업로드한 사진, 좋아요한 포스팅 확인하기
+
+### 와이어프레임
+<img width="883" alt="wireframe_and_design" src="https://user-images.githubusercontent.com/18342765/162860365-b65d1c0d-fe32-439a-983f-d705e9f3435c.png">
+
+### DB 구성 (ERD)
+<img width="1123" alt="erd" src="https://user-images.githubusercontent.com/18342765/162860649-10073e61-7ce8-4a80-a29d-66c2cba91634.png">
+
+### API 설계 
+<img width="1491" alt="api1" src="https://user-images.githubusercontent.com/18342765/162860739-d892e3fe-3680-4dcd-a246-916a657c9f7d.png">
+<img width="1493" alt="api2" src="https://user-images.githubusercontent.com/18342765/162860800-99c588fc-23cc-453a-b7c1-fce80ad16486.png">
+<img width="1486" alt="admin_api" src="https://user-images.githubusercontent.com/18342765/162860852-9d845cf6-7b9c-4ecc-8de8-febea40868c3.png">
